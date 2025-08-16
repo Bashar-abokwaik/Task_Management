@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import Modal from "./Modal";
 
 export default function NewTask({ onAdd }) {
   const [enteredTask, setEnteredTask] = useState("");
+  const modal = useRef();
 
   function handleTaskChange(event) {
     setEnteredTask(event.target.value);
@@ -9,6 +11,7 @@ export default function NewTask({ onAdd }) {
 
   function handleClick() {
     if (enteredTask.trim() === "") {
+      modal.current.open();    
       return;
     }
     onAdd(enteredTask);
@@ -16,6 +19,13 @@ export default function NewTask({ onAdd }) {
   }
 
   return (
+    <>
+    <Modal ref={modal} buttonCaption="Okay">
+      <h2 className="text-2xl font-bold text-stone-950">Add New Task</h2>
+      <p className="text-stone-700">
+        Enter the name of the new task below and click "Add Task" to save it.
+      </p>
+    </Modal>
     <div className="flex items-center gap-4">
       <input
         type="text"
@@ -30,5 +40,6 @@ export default function NewTask({ onAdd }) {
         Add Task
       </button>
     </div>
+    </>
   );
 }

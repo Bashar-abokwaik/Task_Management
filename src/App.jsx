@@ -71,7 +71,7 @@ function App() {
       };
       return {
         ...prevState,
-        selectedProjectId: undefined,
+        selectedProjectId: projectId,
         project: [...prevState.project, newProject],
       };
     });
