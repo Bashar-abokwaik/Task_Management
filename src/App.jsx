@@ -5,12 +5,14 @@ import NoProjectSelected from "./components/NoProjectSelected";
 import SelectedProject from "./components/SelectedProject";
 
 function App() {
+  // State to manage projects, selected project, and tasks
   const [projectsState, setProjectsState] = useState({
     selectedProjectId: undefined,
     project: [],
     tasks: [],
   });
 
+  // Handle adding a new task
   function handleAddTask(text) {
     setProjectsState((prevState) => {
       const TaskId = Math.random();
@@ -18,14 +20,15 @@ function App() {
         text: text,
         projectId: prevState.selectedProjectId,
         id: TaskId,
-      };
+      }; // Create new task object
       return {
         ...prevState,
         tasks: [newTask, ...prevState.tasks],
-      };
+      }; // Update state with new task
     });
   }
 
+  // Handle deleting a task
   function handleDeleteTask(id) {
     setProjectsState((prevState) => {
       return {
@@ -35,6 +38,7 @@ function App() {
     });
   }
 
+  // Handle project selection
   function handleSelectProject(id) {
     setProjectsState((prevState) => {
       return {
@@ -44,15 +48,17 @@ function App() {
     });
   }
 
+  // Handle canceling adding a new project
   function handleCancelAddProject() {
     setProjectsState((prevState) => {
       return {
         ...prevState,
         selectedProjectId: undefined,
       };
-    });
+    }); // undefined indicates no project selected
   }
 
+  // Handle starting to add a new project
   function handleStartAddProject() {
     setProjectsState((prevState) => {
       return {
@@ -60,8 +66,9 @@ function App() {
         selectedProjectId: null,
       };
     });
-  }
+  } // null indicates adding a new project
 
+  // Handle adding a new project
   function handleAddProject(projectData) {
     setProjectsState((prevState) => {
       const projectId = Math.random();
@@ -73,22 +80,25 @@ function App() {
         ...prevState,
         selectedProjectId: projectId,
         project: [...prevState.project, newProject],
-      };
+      }; // Update state with new project
     });
   }
 
+  // Handle deleting the selected project
   function handleDeleteProject(projectId) {
     setProjectsState((prevState) => {
       return {
         ...prevState,
         selectedProjectId: undefined,
         project: prevState.project.filter(
-          (project) => project.id !== prevState.selectedProjectId
-        ),
+          (project) => project.id !== projectId
+        ), // Remove project
+        tasks: prevState.tasks.filter((task) => task.projectId !== projectId), // Remove associated tasks
       };
     });
   }
 
+  // Find the selected project based on selectedProjectId
   const selectedProject = projectsState.project.find(
     (project) => project.id === projectsState.selectedProjectId
   );
@@ -96,7 +106,7 @@ function App() {
   let content = (
     <SelectedProject
       project={selectedProject}
-      onDelete={handleDeleteProject}
+      onDelete={() => handleDeleteProject(selectedProject.id)}
       onAddTask={handleAddTask}
       onDeleteTask={handleDeleteTask}
       tasks={projectsState.tasks}

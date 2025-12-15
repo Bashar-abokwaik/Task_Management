@@ -7,7 +7,7 @@ export default function ProjectSidebar({
   selectedProjectId,
 }) {
   return (
-    <aside className="w-1/3 px-8 py-16 bg-stone-900 text-stone-50 md:w-72 rounded-r-xl">
+    <aside className="w-1/3 px-8 py-16 bg-stone-900 text-stone-50 md:w-72 rounded-r-xl"> {/* Sidebar container */}
       <h2 className="mb-8 font-bold uppercase md:text-xl text-stone-200">
         Your Projects
       </h2>
@@ -16,18 +16,19 @@ export default function ProjectSidebar({
       </div>
       <ul className="mt-8">
         {projects.map((project) => {
+          // Determine CSS classes based on selection
           let cssClasses =
             "w-full text-left px-2 py-1 rounded-sm my-1 hover:text-stone-200 bg-stone-800";
           if (project.id === selectedProjectId) {
-            cssClasses += " bg-stone-800 text-stone-200";
+            cssClasses += " bg-stone-800 text-stone-200"; // Highlight selected project
           } else {
             cssClasses += " text-stone-400";
-          }
+          } // Dim non-selected projects
           return (
             <li key={project.id}>
               <button
                 className={cssClasses}
-                onClick={() => onSelectProject(project.id)}
+                onClick={() => onSelectProject(project.id)} // Handle project selection
               >
                 {project.title}
               </button>

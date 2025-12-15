@@ -11,7 +11,7 @@ export default function SelectedProject({
     year: "numeric",
     month: "short",
     day: "numeric",
-  });
+  }); // Format date as "MMM DD, YYYY"
 
   return (
     <div className="w-[35rem] mt-16">
